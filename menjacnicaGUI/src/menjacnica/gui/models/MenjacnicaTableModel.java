@@ -6,15 +6,16 @@ import javax.swing.table.AbstractTableModel;
 
 import menjacnica.Kurs;
 
-public class MenjacnicaTableModel extends AbstractTableModel{
+public class MenjacnicaTableModel extends AbstractTableModel {
 
-	private final String[] kolone = new String[] { "Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni", "Naziv" };
+	private final String[] kolone = new String[] { "Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni",
+			"Naziv" };
 	private List<Kurs> kursevi;
-	
+
 	public MenjacnicaTableModel(List<Kurs> kursevi) {
-		this.kursevi=kursevi;
+		this.kursevi = kursevi;
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		return kolone.length;
@@ -45,7 +46,7 @@ public class MenjacnicaTableModel extends AbstractTableModel{
 			return "NN";
 		}
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 		return kolone[column];
@@ -56,7 +57,7 @@ public class MenjacnicaTableModel extends AbstractTableModel{
 		fireTableDataChanged();
 	}
 
-	public Kurs vratiKurs(int index) {
+	public Kurs vratiKursPoIndexu(int index) {
 		return kursevi.get(index);
 	}
 

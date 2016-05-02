@@ -14,7 +14,7 @@ import menjacnica.Kurs;
 import menjacnica.Menjacnica;
 
 public class GUIKontroler {
-	
+
 	private static Menjacnica menjacnica = new Menjacnica();
 	private static Kurs kurs = new Kurs();
 	private static MenjacnicaGUI m = new MenjacnicaGUI();
@@ -76,21 +76,33 @@ public class GUIKontroler {
 		d.setVisible(true);
 		d.setLocationRelativeTo(null);
 	}
-	
-	public static void formirajNoviKurs(int sifra, String naziv, String skraceniNaziv, double prodajniKurs, double srednjiKurs, double kupovniKurs){
+
+	public static void formirajNoviKurs(int sifra, String naziv, String skraceniNaziv, double prodajniKurs,
+			double srednjiKurs, double kupovniKurs) {
 		kurs.setSifra(sifra);
 		kurs.setNaziv(naziv);
 		kurs.setSkraceniNaziv(skraceniNaziv);
 		kurs.setProdajniKurs(prodajniKurs);
 		kurs.setSrednjiKurs(prodajniKurs, kupovniKurs);
 		kurs.setKupovniKurs(kupovniKurs);
+
 		menjacnica.dodajKurs(kurs);
-		d.dispose();
-	}
-	
-	public static LinkedList<Kurs> vratiKursnuListu(){
-		return menjacnica.vratiListuKurseva();
+		m.osveziTabelu();
+
 	}
 
+	public static LinkedList<Kurs> vratiKursnuListu() {
+		return menjacnica.vratiListuKurseva();
+	}
+	
+	public static void upozoriDaBiraRed() {
+		JOptionPane.showMessageDialog(m.getContentPane(), "Izaberite kurs koji zelite da izbrisete iz tabele",
+				"Greska", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public static void izbrisiKurs(Kurs k) {
+			menjacnica.izbrisiKurs(k);
+			m.osveziTabelu();
+	}
 
 }

@@ -179,8 +179,8 @@ public class DodajKursGUI extends JFrame {
 			btnDodaj.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int sifra = Integer.parseInt(textFieldSifra.getText());
-					String naziv = textFieldSifra.getText();
-					String skraceniNaziv = textFieldSifra.getText();
+					String naziv = textFieldNaziv.getText();
+					String skraceniNaziv = textFieldNazivS.getText();
 					double prodajniKurs = Double.parseDouble(textFieldKursP.getText());
 					double srednjiKurs = Double.parseDouble(textFieldKursS.getText());
 					double kupovniKurs = Double.parseDouble(textFieldKursK.getText());

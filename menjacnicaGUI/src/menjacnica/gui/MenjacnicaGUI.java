@@ -24,6 +24,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import menjacnica.Kurs;
 import menjacnica.gui.models.MenjacnicaTableModel;
 
 import javax.swing.JScrollPane;
@@ -76,11 +77,13 @@ public class MenjacnicaGUI extends JFrame {
 	private JTextArea textArea;
 
 	public MenjacnicaGUI() {
+		setSize(new Dimension(1000, 600));
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MenjacnicaGUI.class.getResource("/resources/cambio_1703779b.jpg")));
-		setPreferredSize(new Dimension(600, 600));
+		setPreferredSize(new Dimension(1000, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 619, 411);
+		setBounds(100, 100, 730, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -211,6 +214,23 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnIzbrisiKurs() {
 		if (btnIzbrisiKurs == null) {
 			btnIzbrisiKurs = new JButton("Izbrisi kurs");
+			btnIzbrisiKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int index = table.getSelectedRow();
+					if (index == -1) {
+						GUIKontroler.upozoriDaBiraRed();
+					} else {
+						int opcija = JOptionPane.showConfirmDialog(null, "Da li ste sigurni?",
+								"Greska", JOptionPane.YES_NO_OPTION);
+						if (opcija == JOptionPane.YES_OPTION) {
+							MenjacnicaTableModel model = (MenjacnicaTableModel) table.getModel();
+							Kurs k = model.vratiKursPoIndexu(index);
+							GUIKontroler.izbrisiKurs(k);
+						}
+					}
+					
+				}
+			});
 			btnIzbrisiKurs.setPreferredSize(new Dimension(99, 23));
 		}
 		return btnIzbrisiKurs;
@@ -236,34 +256,11 @@ public class MenjacnicaGUI extends JFrame {
 		if (table == null) {
 			table = new JTable();
 			table.setFillsViewportHeight(true);
-			table.setModel(new DefaultTableModel(new Object[][] {},
-					new String[] { "Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni", "Naziv" }) {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-				@SuppressWarnings("rawtypes")
-				Class[] columnTypes = new Class[] { Integer.class, String.class, Double.class, Double.class,
-						Double.class, String.class };
-
-				@SuppressWarnings({ "unchecked", "rawtypes" })
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-
-				boolean[] columnEditables = new boolean[] { false, false, false, false, false, false };
-
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
-			table.getColumnModel().getColumn(1).setPreferredWidth(94);
-			table.getColumnModel().getColumn(5).setPreferredWidth(87);
-
+			table.setModel(new MenjacnicaTableModel(GUIKontroler.vratiKursnuListu()));
 			addPopup(table, getPopupMenu());
-
 		}
 		return table;
+
 	}
 
 	private JPopupMenu getPopupMenu() {
@@ -340,7 +337,7 @@ public class MenjacnicaGUI extends JFrame {
 
 		return scrollPane;
 	}
-	
+
 	public void osveziTabelu() {
 		MenjacnicaTableModel model = (MenjacnicaTableModel) table.getModel();
 		model.staviSveKurseveUModel(GUIKontroler.vratiKursnuListu());
