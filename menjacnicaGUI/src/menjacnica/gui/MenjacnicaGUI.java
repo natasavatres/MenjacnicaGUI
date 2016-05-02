@@ -23,6 +23,9 @@ import javax.swing.JFileChooser;
 import java.awt.FlowLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import menjacnica.gui.models.MenjacnicaTableModel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
@@ -44,23 +47,6 @@ import java.awt.event.ActionEvent;
 public class MenjacnicaGUI extends JFrame {
 
 	private JPanel contentPane;
-	private static MenjacnicaGUI m = new MenjacnicaGUI();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenjacnicaGUI frame = new MenjacnicaGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -92,7 +78,7 @@ public class MenjacnicaGUI extends JFrame {
 	public MenjacnicaGUI() {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MenjacnicaGUI.class.getResource("/resources/cambio_1703779b.jpg")));
-		setPreferredSize(new Dimension(600, 400));
+		setPreferredSize(new Dimension(600, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 619, 411);
 		contentPane = new JPanel();
@@ -138,13 +124,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmOpen = new JMenuItem("Open");
 			mntmOpen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					JFileChooser fileChooser = new JFileChooser();
-					int returnValue = fileChooser.showOpenDialog(null);
-					if (returnValue == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fileChooser.getSelectedFile();
-						textArea.setText("Ucitan fajl: " + selectedFile.getName() + " sa lokacije "
-								+ selectedFile.getAbsolutePath());
-					}
+					textArea.append(GUIKontroler.menuOpen());
 				}
 			});
 			mntmOpen.setIcon(new ImageIcon(
@@ -169,14 +149,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmExit = new JMenuItem("Exit");
 			mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-
-					int opcija = JOptionPane.showConfirmDialog(m.getContentPane(),
-							"Da li zelite da izadjete iz programa?", "Izlazak", JOptionPane.YES_NO_OPTION);
-
-					if (opcija == JOptionPane.YES_OPTION) {
-						System.exit(0);
-					}
-
+					GUIKontroler.izlaz();
 				}
 			});
 			mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
@@ -189,16 +162,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmAbout = new JMenuItem("About");
 			mntmAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JDialog ab = new JDialog(m);
-					ab.setTitle("O autoru programa");
-					ab.setSize(new Dimension(300, 100));
-					ab.setLocationRelativeTo(m);
-			        ab.setModal(true);
-			        
-			        JLabel tekst = new JLabel("Natasa Vatres 10/14");
-			        ab.add(tekst);
-			        
-			        ab.setVisible(true);
+					GUIKontroler.about();
 				}
 			});
 			mntmAbout.setIcon(new ImageIcon(
@@ -234,6 +198,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnDodajKurs() {
 		if (btnDodajKurs == null) {
 			btnDodajKurs = new JButton("Dodaj kurs");
+			btnDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					GUIKontroler.pokreniDodajKursProzor();
+				}
+			});
 			btnDodajKurs.setPreferredSize(new Dimension(99, 23));
 		}
 		return btnDodajKurs;
@@ -273,9 +242,11 @@ public class MenjacnicaGUI extends JFrame {
 				 * 
 				 */
 				private static final long serialVersionUID = 1L;
+				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] { Integer.class, String.class, Double.class, Double.class,
 						Double.class, String.class };
 
+				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				}
@@ -350,7 +321,7 @@ public class MenjacnicaGUI extends JFrame {
 		if (textArea == null) {
 			textArea = new JTextArea();
 			textArea.setWrapStyleWord(true);
-			textArea.setPreferredSize(new Dimension(4, 50));
+			textArea.setPreferredSize(new Dimension(4, 100));
 			textArea.setLineWrap(true);
 			textArea.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "STATUS",
 
@@ -368,6 +339,11 @@ public class MenjacnicaGUI extends JFrame {
 		}
 
 		return scrollPane;
+	}
+	
+	public void osveziTabelu() {
+		MenjacnicaTableModel model = (MenjacnicaTableModel) table.getModel();
+		//model.staviSveKurseveUModel(GUIKontroler.vratiSveKnjige());
 	}
 
 }
