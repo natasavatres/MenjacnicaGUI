@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import menjacnica.Kurs;
+import menjacnica.Menjacnica;
+
 import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,6 +20,9 @@ import java.awt.peer.TextFieldPeer;
 import java.awt.event.ActionEvent;
 
 public class DodajKursGUI extends JFrame {
+	
+	private static Menjacnica menjacnica = new Menjacnica();
+	private static Kurs kurs = new Kurs();
 
 	private JPanel contentPane;
 	private JLabel lblSifra;
@@ -177,6 +184,7 @@ public class DodajKursGUI extends JFrame {
 					double prodajniKurs = Double.parseDouble(textFieldKursP.getText());
 					double srednjiKurs = Double.parseDouble(textFieldKursS.getText());
 					double kupovniKurs = Double.parseDouble(textFieldKursK.getText());
+					
 					GUIKontroler.formirajNoviKurs(sifra,naziv,skraceniNaziv,prodajniKurs,srednjiKurs,kupovniKurs);
 				}
 			});

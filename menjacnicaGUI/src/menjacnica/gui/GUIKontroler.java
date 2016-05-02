@@ -9,7 +9,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import menjacnica.Kurs;
+import menjacnica.Menjacnica;
+
 public class GUIKontroler {
+	
+	private static Menjacnica menjacnica = new Menjacnica();
+	private static Kurs kurs = new Kurs();
 	private static MenjacnicaGUI m = new MenjacnicaGUI();
 	private static DodajKursGUI d = new DodajKursGUI();
 
@@ -69,16 +75,15 @@ public class GUIKontroler {
 		d.setVisible(true);
 		d.setLocationRelativeTo(null);
 	}
-
-	public static String formirajNoviKurs(int sifra, String naziv, String skraceniNaziv, double prodajniKurs,
-			double srednjiKurs, double kupovniKurs) {
-		String noviKurs = "Sifra: " + sifra + " Naziv: " + naziv + " Skraceni naziv: "
-				+ skraceniNaziv + " Prodajni kurs: " + prodajniKurs + " Srednji kurs: "
-				+ srednjiKurs + " Kupovni kurs: " + kupovniKurs + "\n";
-		return noviKurs;
-	}
 	
-	public static void upisiNoviKursUTextArea(){
+	public static void formirajNoviKurs(int sifra, String naziv, String skraceniNaziv, double prodajniKurs, double srednjiKurs, double kupovniKurs){
+		kurs.setSifra(sifra);
+		kurs.setNaziv(naziv);
+		kurs.setSkraceniNaziv(skraceniNaziv);
+		kurs.setProdajniKurs(prodajniKurs);
+		kurs.setSrednjiKurs(prodajniKurs, kupovniKurs);
+		kurs.setKupovniKurs(kupovniKurs);
+		menjacnica.dodajKurs(kurs);
 		d.dispose();
 	}
 
