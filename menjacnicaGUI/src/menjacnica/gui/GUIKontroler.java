@@ -3,6 +3,7 @@ package menjacnica.gui;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.io.File;
+import java.util.LinkedList;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -86,5 +87,10 @@ public class GUIKontroler {
 		menjacnica.dodajKurs(kurs);
 		d.dispose();
 	}
+	
+	public static LinkedList<Kurs> vratiKursnuListu(){
+		return menjacnica.vratiListuKurseva();
+	}
+
 
 }

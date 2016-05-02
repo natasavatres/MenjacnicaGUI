@@ -4,15 +4,15 @@ import java.util.LinkedList;
 
 public class Menjacnica implements MenjacnicaInterfejs {
 
-	LinkedList<Kurs> kursnaLista = new LinkedList<>();
+	LinkedList<Kurs> listaKurseva = new LinkedList<>();
 
 	@Override
 	public void dodajKurs(Kurs k) {
 		if (k == null)
 			throw new RuntimeException("Greska");
 
-		if (!kursnaLista.contains(k)) {
-			kursnaLista.add(k);
+		if (!listaKurseva.contains(k)) {
+			listaKurseva.add(k);
 		} else {
 			return;
 		}
@@ -24,25 +24,25 @@ public class Menjacnica implements MenjacnicaInterfejs {
 		if (k == null)
 			throw new RuntimeException("Greska");
 
-		if (kursnaLista.contains(k)) {
-			kursnaLista.remove(k);
+		if (listaKurseva.contains(k)) {
+			listaKurseva.remove(k);
 		}
 
 	}
 
 	@Override
 	public Kurs vratiKurs(String naziv) {
-		for (int i = 0; i < kursnaLista.size(); i++) {
-			if (kursnaLista.get(i).getNaziv().equals(naziv)) {
-				return kursnaLista.get(i);
+		for (int i = 0; i < listaKurseva.size(); i++) {
+			if (listaKurseva.get(i).getNaziv().equals(naziv)) {
+				return listaKurseva.get(i);
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public LinkedList<Kurs> vratiKursnuListu() {
-		return kursnaLista;
+	public LinkedList<Kurs> vratiListuKurseva() {
+		return listaKurseva;
 	}
 
 }

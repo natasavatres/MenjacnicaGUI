@@ -6,5 +6,5 @@ public interface MenjacnicaInterfejs {
 	public void dodajKurs(Kurs k);
 	public void izbrisiKurs(Kurs k);
 	public Kurs vratiKurs(String naziv);
-	public LinkedList<Kurs> vratiKursnuListu();
+	public LinkedList<Kurs> vratiListuKurseva();
 }
