@@ -8,12 +8,12 @@ import menjacnica.Kurs;
 
 public class MenjacnicaTableModel extends AbstractTableModel {
 
-	private final String[] kolone = new String[] { "Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni",
+	private final String[] kolone = { "Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni",
 			"Naziv" };
-	private List<Kurs> kursevi;
+	private List<Kurs> listaKurseva;
 
-	public MenjacnicaTableModel(List<Kurs> kursevi) {
-		this.kursevi = kursevi;
+	public MenjacnicaTableModel(List<Kurs> listaKurseva) {
+		this.listaKurseva = listaKurseva;
 	}
 
 	@Override
@@ -23,12 +23,12 @@ public class MenjacnicaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return kursevi.size();
+		return listaKurseva.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Kurs k = kursevi.get(rowIndex);
+		Kurs k = listaKurseva.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
 			return k.getSifra();
@@ -48,17 +48,21 @@ public class MenjacnicaTableModel extends AbstractTableModel {
 	}
 
 	@Override
+	public boolean isCellEditable(int arg0, int arg1) {
+		return false;
+	}
+	
+	@Override
 	public String getColumnName(int column) {
 		return kolone[column];
 	}
-
-	public void staviSveKurseveUModel(List<Kurs> kursevi) {
-		this.kursevi = kursevi;
+	
+	public void osveziTabelu(){
 		fireTableDataChanged();
 	}
 
 	public Kurs vratiKursPoIndexu(int index) {
-		return kursevi.get(index);
+		return listaKurseva.get(index);
 	}
 
 }

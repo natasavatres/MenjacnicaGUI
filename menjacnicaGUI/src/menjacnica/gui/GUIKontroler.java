@@ -41,9 +41,17 @@ public class GUIKontroler {
 		int returnValue = fileChooser.showOpenDialog(null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
-			String s = " Ucitan fajl: " + selectedFile.getName() + " sa lokacije " + selectedFile.getAbsolutePath()
-					+ "\n";
-			return s;
+			return " Ucitan fajl: " + selectedFile.getName() + " sa lokacije " + selectedFile.getAbsolutePath() + "\n";
+		}
+		return "";
+	}
+
+	public static String menuSave() {
+		JFileChooser fc = new JFileChooser();
+		int returnVal = fc.showSaveDialog(m);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fc.getSelectedFile();
+			return "Sacuvan fajl: " + selectedFile.getAbsolutePath();
 		}
 		return "";
 	}
@@ -91,18 +99,24 @@ public class GUIKontroler {
 
 	}
 
-	public static LinkedList<Kurs> vratiKursnuListu() {
+	public static LinkedList<Kurs> vratiListuKurseva() {
 		return menjacnica.vratiListuKurseva();
 	}
-	
+
 	public static void upozoriDaBiraRed() {
-		JOptionPane.showMessageDialog(m.getContentPane(), "Izaberite kurs koji zelite da izbrisete iz tabele",
-				"Greska", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(m.getContentPane(), "Izaberite kurs koji zelite da izbrisete iz tabele", "Greska",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	public static void izbrisiKurs(Kurs k) {
-			menjacnica.izbrisiKurs(k);
-			m.osveziTabelu();
+		menjacnica.izbrisiKurs(k);
+		m.osveziTabelu();
+	}
+	
+	public static void pokreniIzvrsiZamenuProzor(){
+		IzvrsiZamenuGUI iz = new IzvrsiZamenuGUI();
+		iz.setVisible(true);
+		iz.setLocationRelativeTo(null);
 	}
 
 }
